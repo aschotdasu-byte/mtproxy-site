@@ -3,70 +3,65 @@ import Link from 'next/link';
 export default function HomeScreenPage() {
   const pageStyle: React.CSSProperties = {
     minHeight: '100vh',
-    margin: 0,
-    background: 'linear-gradient(180deg, #071427 0%, #06101f 100%)',
-    color: '#ffffff',
+    background:
+      'radial-gradient(circle at top, rgba(0,0,0,0.05), transparent 28%), #ffffff',
+    color: '#111111',
+  };
+
+  const container: React.CSSProperties = {
+    maxWidth: 1180,
+    margin: '0 auto',
+    padding: '56px 20px 80px',
     fontFamily:
       'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
   };
 
-  const container: React.CSSProperties = {
-    maxWidth: 900,
-    margin: '0 auto',
-    padding: '40px 20px 80px',
-  };
-
-  const backLink: React.CSSProperties = {
-    color: '#9fb3c8',
-    textDecoration: 'none',
-    fontSize: 14,
-  };
-
-  const titleStyle: React.CSSProperties = {
-    fontSize: 52,
-    lineHeight: 1.05,
-    margin: '24px 0 12px',
-    letterSpacing: '-0.04em',
-  };
-
-  const subtitleStyle: React.CSSProperties = {
-    color: '#8fa6bf',
-    fontSize: 18,
-    margin: 0,
-  };
-
   const sectionCard: React.CSSProperties = {
-    background: 'rgba(29, 42, 58, 0.92)',
-    color: '#ffffff',
-    border: '1px solid rgba(255,255,255,0.08)',
+    background: '#ffffff',
+    border: '1px solid rgba(0,0,0,0.08)',
     borderRadius: 24,
-    padding: 22,
-    boxShadow: '0 10px 30px rgba(0,0,0,0.22)',
+    padding: 24,
+    boxShadow: '0 10px 30px rgba(0,0,0,0.06)',
   };
 
   const stepCard: React.CSSProperties = {
     display: 'flex',
     gap: 14,
     alignItems: 'flex-start',
-    background: 'rgba(255,255,255,0.03)',
-    border: '1px solid rgba(255,255,255,0.06)',
+    background: '#fafafa',
+    border: '1px solid rgba(0,0,0,0.06)',
     borderRadius: 18,
     padding: 18,
   };
 
   const badge: React.CSSProperties = {
-    width: 30,
-    height: 30,
-    minWidth: 30,
+    width: 32,
+    height: 32,
+    minWidth: 32,
     borderRadius: 999,
-    background: '#2ea8ff',
-    color: '#fff',
+    background: '#111111',
+    color: '#ffffff',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     fontWeight: 700,
     fontSize: 14,
     marginTop: 2,
+  };
+
+  const titleStyle: React.CSSProperties = {
+    fontSize: 'clamp(38px, 6vw, 64px)',
+    lineHeight: 1,
+    margin: '0 0 16px',
+    letterSpacing: '-0.04em',
+  };
+
+  const subtitleStyle: React.CSSProperties = {
+    maxWidth: 760,
+    color: '#666',
+    fontSize: 18,
+    lineHeight: 1.7,
+    margin: 0,
   };
 
   const stepTitle: React.CSSProperties = {
@@ -76,7 +71,7 @@ export default function HomeScreenPage() {
   };
 
   const stepText: React.CSSProperties = {
-    color: '#9fb3c8',
+    color: '#666',
     margin: '6px 0 0',
     lineHeight: 1.6,
     fontSize: 15,
@@ -85,14 +80,42 @@ export default function HomeScreenPage() {
   return (
     <main style={pageStyle}>
       <div style={container}>
-        <Link href="/" style={backLink}>
+        <Link href="/" style={{ color: '#666', textDecoration: 'none', fontSize: 14 }}>
           ← На главную
         </Link>
 
-        <h1 style={titleStyle}>Добавить на экран</h1>
-        <p style={subtitleStyle}>Быстрый доступ к прокси одним нажатием</p>
+        <div style={{ marginTop: 24, marginBottom: 28 }}>
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 8,
+              padding: '10px 14px',
+              borderRadius: 999,
+              border: '1px solid rgba(0,0,0,0.08)',
+              background: '#fafafa',
+              color: '#555',
+              fontSize: 14,
+              marginBottom: 18,
+            }}
+          >
+            <span
+              style={{
+                width: 8,
+                height: 8,
+                borderRadius: 999,
+                background: '#111111',
+                display: 'inline-block',
+              }}
+            />
+            Быстрый доступ
+          </div>
 
-        <div style={{ display: 'grid', gap: 18, marginTop: 34 }}>
+          <h1 style={titleStyle}>Добавить на экран</h1>
+          <p style={subtitleStyle}>Быстрый доступ к прокси одним нажатием</p>
+        </div>
+
+        <div style={{ display: 'grid', gap: 18, maxWidth: 860 }}>
           <section style={sectionCard}>
             <h2 style={{ marginTop: 0, marginBottom: 18, fontSize: 28 }}>
               iPhone / iPad (Safari)
@@ -141,9 +164,7 @@ export default function HomeScreenPage() {
                 <div style={badge}>1</div>
                 <div>
                   <p style={stepTitle}>Откройте сайт в Chrome</p>
-                  <p style={stepText}>
-                    Или в другом Chromium-браузере.
-                  </p>
+                  <p style={stepText}>Или в другом Chromium-браузере.</p>
                 </div>
               </div>
 
