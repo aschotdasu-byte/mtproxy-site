@@ -1,6 +1,19 @@
+'use client';
+
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { Lang, translations } from '../i18n';
 
 export default function FaqPage() {
+  const [lang, setLang] = useState<Lang>('ru');
+
+  useEffect(() => {
+    const saved = localStorage.getItem('site-lang') as Lang | null;
+    if (saved === 'ru' || saved === 'en' || saved === 'fa') setLang(saved);
+  }, []);
+
+  const t = translations[lang];
+
   const pageStyle: React.CSSProperties = {
     minHeight: '100vh',
     background:
@@ -28,7 +41,7 @@ export default function FaqPage() {
     <main style={pageStyle}>
       <div style={container}>
         <Link href="/" style={{ color: '#666', textDecoration: 'none', fontSize: 14 }}>
-          ← На главную
+          {t.common.backHome}
         </Link>
 
         <div style={{ marginTop: 24, marginBottom: 28 }}>
@@ -40,19 +53,15 @@ export default function FaqPage() {
               letterSpacing: '-0.04em',
             }}
           >
-            FAQ
+            {t.faq.title}
           </h1>
         </div>
 
         <div style={{ ...cardStyle, maxWidth: 860 }}>
           <div style={{ display: 'grid', gap: 14 }}>
-            {[
-              ['Это бесплатный прокси?', 'Да, сейчас доступен бесплатный сервер для подключения.'],
-              ['Работает ли на телефоне?', 'Да, сайт и подключение рассчитаны на мобильные устройства.'],
-              ['Можно добавить другие серверы?', 'Да, позже можно расширить список прокси и добавить новые страны.'],
-            ].map(([q, a]) => (
+            {t.faq.items.map((item, index) => (
               <details
-                key={q}
+                key={index}
                 style={{
                   border: '1px solid rgba(0,0,0,0.08)',
                   borderRadius: 18,
@@ -61,9 +70,11 @@ export default function FaqPage() {
                 }}
               >
                 <summary style={{ cursor: 'pointer', fontWeight: 700, fontSize: 18 }}>
-                  {q}
+                  {item.q}
                 </summary>
-                <p style={{ color: '#666', marginTop: 12, lineHeight: 1.7 }}>{a}</p>
+                <p style={{ color: '#666', marginTop: 12, lineHeight: 1.7 }}>
+                  {item.a}
+                </p>
               </details>
             ))}
           </div>
