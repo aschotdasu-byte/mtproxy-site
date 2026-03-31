@@ -1,6 +1,19 @@
+'use client';
+
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { Lang, translations } from '../i18n';
 
 export default function AboutPage() {
+  const [lang, setLang] = useState<Lang>('ru');
+
+  useEffect(() => {
+    const saved = localStorage.getItem('site-lang') as Lang | null;
+    if (saved === 'ru' || saved === 'en' || saved === 'fa') setLang(saved);
+  }, []);
+
+  const t = translations[lang];
+
   const pageStyle: React.CSSProperties = {
     minHeight: '100vh',
     background:
@@ -29,7 +42,7 @@ export default function AboutPage() {
     <main style={pageStyle}>
       <div style={container}>
         <Link href="/" style={{ color: '#666', textDecoration: 'none', fontSize: 14 }}>
-          ← На главную
+          {t.common.backHome}
         </Link>
 
         <div style={{ marginTop: 24, marginBottom: 28 }}>
@@ -41,7 +54,7 @@ export default function AboutPage() {
               letterSpacing: '-0.04em',
             }}
           >
-            О нас
+            {t.about.title}
           </h1>
 
           <p
@@ -53,22 +66,19 @@ export default function AboutPage() {
               margin: 0,
             }}
           >
-            Мы сделали простой и удобный сайт для быстрого доступа к Telegram через
-            MTProto proxy.
+            {t.about.subtitle}
           </p>
         </div>
 
         <div style={cardStyle}>
           <p style={{ color: '#666', lineHeight: 1.8, marginTop: 0 }}>
-            Наша цель — дать пользователям понятный интерфейс, быстрый доступ к
-            рабочим серверам и удобную инструкцию по подключению.
+            {t.about.text}
           </p>
 
           <ul style={{ color: '#666', lineHeight: 2, paddingLeft: 20, marginBottom: 0 }}>
-            <li>Публикуем доступные прокси</li>
-            <li>Делаем подключение максимально простым</li>
-            <li>Поддерживаем мобильные устройства</li>
-            <li>Добавляем быстрый доступ на главный экран</li>
+            {t.about.items.map((item, index) => (
+              <li key={index}>{item}</li>
+            ))}
           </ul>
         </div>
       </div>
