@@ -1,14 +1,25 @@
+'use client';
+
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { Lang, translations } from './i18n';
 
 export default function HomePage() {
+  const [lang, setLang] = useState<Lang>('ru');
+
+  useEffect(() => {
+    const saved = localStorage.getItem('site-lang') as Lang | null;
+    if (saved === 'ru' || saved === 'en' || saved === 'fa') setLang(saved);
+  }, []);
+
+  const t = translations[lang];
+
   const pageStyle: React.CSSProperties = {
     minHeight: '100vh',
     margin: 0,
     background:
       'radial-gradient(circle at top, rgba(0,0,0,0.06), transparent 28%), #ffffff',
     color: '#111111',
-    fontFamily:
-      'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
   };
 
   const container: React.CSSProperties = {
@@ -84,7 +95,7 @@ export default function HomePage() {
                   display: 'inline-block',
                 }}
               />
-              Сервер в Нидерландах
+              {t.common.serverBadge}
             </div>
 
             <h1
@@ -95,7 +106,7 @@ export default function HomePage() {
                 letterSpacing: '-0.04em',
               }}
             >
-              Прокси для Telegram
+              {t.home.title}
             </h1>
 
             <p
@@ -107,17 +118,15 @@ export default function HomePage() {
                 margin: '0 0 28px',
               }}
             >
-              Быстрый и стабильный доступ через сервер в Нидерландах. Теперь у
-              сайта есть отдельные страницы для прокси, подключения, FAQ, раздела
-              «О нас» и добавления ярлыка на экран.
+              {t.home.subtitle}
             </p>
 
             <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
               <Link href="/proxy" style={primaryBtn}>
-                Перейти к прокси
+                {t.home.goProxy}
               </Link>
               <Link href="/how" style={secondaryBtn}>
-                Как подключить
+                {t.home.howTo}
               </Link>
             </div>
 
@@ -135,11 +144,11 @@ export default function HomePage() {
               </div>
               <div>
                 <div style={{ fontSize: 28, fontWeight: 700 }}>24/7</div>
-                <div style={{ color: '#666', fontSize: 14 }}>Uptime</div>
+                <div style={{ color: '#666', fontSize: 14 }}>{t.home.uptime}</div>
               </div>
               <div>
                 <div style={{ fontSize: 28, fontWeight: 700 }}>5</div>
-                <div style={{ color: '#666', fontSize: 14 }}>Pages</div>
+                <div style={{ color: '#666', fontSize: 14 }}>{t.home.pages}</div>
               </div>
             </div>
           </div>
@@ -155,7 +164,7 @@ export default function HomePage() {
             >
               <div>
                 <div style={{ fontSize: 24, fontWeight: 700 }}>
-                  Нидерланды · Amsterdam
+                  {t.home.server}
                 </div>
                 <div style={{ marginTop: 6, color: '#777', fontSize: 14 }}>
                   NL-1
@@ -184,7 +193,7 @@ export default function HomePage() {
                   borderBottom: '1px solid rgba(0,0,0,0.06)',
                 }}
               >
-                <span style={{ color: '#666' }}>Пинг</span>
+                <span style={{ color: '#666' }}>{t.common.ping}</span>
                 <strong>35 ms</strong>
               </div>
               <div
@@ -195,8 +204,8 @@ export default function HomePage() {
                   borderBottom: '1px solid rgba(0,0,0,0.06)',
                 }}
               >
-                <span style={{ color: '#666' }}>Статус</span>
-                <strong>Онлайн</strong>
+                <span style={{ color: '#666' }}>{t.common.status}</span>
+                <strong>{t.common.online}</strong>
               </div>
               <div
                 style={{
@@ -204,7 +213,7 @@ export default function HomePage() {
                   justifyContent: 'space-between',
                 }}
               >
-                <span style={{ color: '#666' }}>Протокол</span>
+                <span style={{ color: '#666' }}>{t.common.protocol}</span>
                 <strong>MTProto</strong>
               </div>
             </div>
@@ -219,7 +228,7 @@ export default function HomePage() {
                 boxSizing: 'border-box',
               }}
             >
-              Открыть страницу прокси
+              {t.home.openProxyPage}
             </Link>
           </div>
         </div>
