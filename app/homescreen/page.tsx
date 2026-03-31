@@ -1,6 +1,19 @@
+'use client';
+
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { Lang, translations } from '../i18n';
 
 export default function HomeScreenPage() {
+  const [lang, setLang] = useState<Lang>('ru');
+
+  useEffect(() => {
+    const saved = localStorage.getItem('site-lang') as Lang | null;
+    if (saved === 'ru' || saved === 'en' || saved === 'fa') setLang(saved);
+  }, []);
+
+  const t = translations[lang];
+
   const pageStyle: React.CSSProperties = {
     minHeight: '100vh',
     background:
@@ -81,7 +94,7 @@ export default function HomeScreenPage() {
     <main style={pageStyle}>
       <div style={container}>
         <Link href="/" style={{ color: '#666', textDecoration: 'none', fontSize: 14 }}>
-          ← На главную
+          {t.common.backHome}
         </Link>
 
         <div style={{ marginTop: 24, marginBottom: 28 }}>
@@ -108,85 +121,47 @@ export default function HomeScreenPage() {
                 display: 'inline-block',
               }}
             />
-            Быстрый доступ
+            {t.common.quickAccess}
           </div>
 
-          <h1 style={titleStyle}>Добавить на экран</h1>
-          <p style={subtitleStyle}>Быстрый доступ к прокси одним нажатием</p>
+          <h1 style={titleStyle}>{t.homescreen.title}</h1>
+          <p style={subtitleStyle}>{t.homescreen.subtitle}</p>
         </div>
 
         <div style={{ display: 'grid', gap: 18, maxWidth: 860 }}>
           <section style={sectionCard}>
             <h2 style={{ marginTop: 0, marginBottom: 18, fontSize: 28 }}>
-              iPhone / iPad (Safari)
+              {t.homescreen.iphone}
             </h2>
 
             <div style={{ display: 'grid', gap: 12 }}>
-              <div style={stepCard}>
-                <div style={badge}>1</div>
-                <div>
-                  <p style={stepTitle}>Откройте сайт в Safari</p>
-                  <p style={stepText}>
-                    Именно в Safari — из Chrome или Firefox не получится.
-                  </p>
+              {t.homescreen.iphoneSteps.map((step, index) => (
+                <div key={index} style={stepCard}>
+                  <div style={badge}>{index + 1}</div>
+                  <div>
+                    <p style={stepTitle}>{step.title}</p>
+                    <p style={stepText}>{step.text}</p>
+                  </div>
                 </div>
-              </div>
-
-              <div style={stepCard}>
-                <div style={badge}>2</div>
-                <div>
-                  <p style={stepTitle}>Нажмите «Поделиться»</p>
-                  <p style={stepText}>
-                    Иконка с квадратом и стрелкой вверх внизу экрана.
-                  </p>
-                </div>
-              </div>
-
-              <div style={stepCard}>
-                <div style={badge}>3</div>
-                <div>
-                  <p style={stepTitle}>Выберите «На экран Домой»</p>
-                  <p style={stepText}>
-                    Пролистайте список и нажмите. Подтвердите добавление.
-                  </p>
-                </div>
-              </div>
+              ))}
             </div>
           </section>
 
           <section style={sectionCard}>
             <h2 style={{ marginTop: 0, marginBottom: 18, fontSize: 28 }}>
-              Android (Chrome)
+              {t.homescreen.android}
             </h2>
 
             <div style={{ display: 'grid', gap: 12 }}>
-              <div style={stepCard}>
-                <div style={badge}>1</div>
-                <div>
-                  <p style={stepTitle}>Откройте сайт в Chrome</p>
-                  <p style={stepText}>Или в другом Chromium-браузере.</p>
+              {t.homescreen.androidSteps.map((step, index) => (
+                <div key={index} style={stepCard}>
+                  <div style={badge}>{index + 1}</div>
+                  <div>
+                    <p style={stepTitle}>{step.title}</p>
+                    <p style={stepText}>{step.text}</p>
+                  </div>
                 </div>
-              </div>
-
-              <div style={stepCard}>
-                <div style={badge}>2</div>
-                <div>
-                  <p style={stepTitle}>Откройте меню</p>
-                  <p style={stepText}>
-                    Три точки в правом верхнем углу браузера.
-                  </p>
-                </div>
-              </div>
-
-              <div style={stepCard}>
-                <div style={badge}>3</div>
-                <div>
-                  <p style={stepTitle}>Нажмите «Добавить на главный экран»</p>
-                  <p style={stepText}>
-                    Подтвердите — ярлык появится среди приложений.
-                  </p>
-                </div>
-              </div>
+              ))}
             </div>
           </section>
         </div>
