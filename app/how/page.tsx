@@ -1,6 +1,19 @@
+'use client';
+
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { Lang, translations } from '../i18n';
 
 export default function HowPage() {
+  const [lang, setLang] = useState<Lang>('ru');
+
+  useEffect(() => {
+    const saved = localStorage.getItem('site-lang') as Lang | null;
+    if (saved === 'ru' || saved === 'en' || saved === 'fa') setLang(saved);
+  }, []);
+
+  const t = translations[lang];
+
   const pageStyle: React.CSSProperties = {
     minHeight: '100vh',
     background:
@@ -41,7 +54,7 @@ export default function HowPage() {
     <main style={pageStyle}>
       <div style={container}>
         <Link href="/" style={{ color: '#666', textDecoration: 'none', fontSize: 14 }}>
-          ← На главную
+          {t.common.backHome}
         </Link>
 
         <div style={{ marginTop: 24, marginBottom: 28 }}>
@@ -53,7 +66,7 @@ export default function HowPage() {
               letterSpacing: '-0.04em',
             }}
           >
-            Как подключить
+            {t.how.title}
           </h1>
 
           <p
@@ -65,7 +78,7 @@ export default function HowPage() {
               margin: 0,
             }}
           >
-            Подключение занимает меньше минуты. Просто следуй этим шагам.
+            {t.how.subtitle}
           </p>
         </div>
 
@@ -76,15 +89,13 @@ export default function HowPage() {
             gap: 18,
           }}
         >
-          {[
-            ['1', 'Перейди в раздел «Прокси»', 'Открой страницу с доступным сервером.'],
-            ['2', 'Нажми кнопку «Подключить»', 'Telegram откроет ссылку прокси автоматически.'],
-            ['3', 'Подтверди подключение', 'После подтверждения прокси начнет работать.'],
-          ].map(([n, title, text]) => (
-            <div key={n} style={cardStyle}>
-              <div style={numStyle}>{n}</div>
-              <div style={{ fontSize: 22, fontWeight: 700, marginBottom: 10 }}>{title}</div>
-              <div style={{ color: '#666', lineHeight: 1.7 }}>{text}</div>
+          {t.how.steps.map((step, index) => (
+            <div key={index} style={cardStyle}>
+              <div style={numStyle}>{index + 1}</div>
+              <div style={{ fontSize: 22, fontWeight: 700, marginBottom: 10 }}>
+                {step.title}
+              </div>
+              <div style={{ color: '#666', lineHeight: 1.7 }}>{step.text}</div>
             </div>
           ))}
         </div>
