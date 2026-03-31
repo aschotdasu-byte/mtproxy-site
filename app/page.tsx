@@ -26,12 +26,16 @@ export default function Home() {
     localStorage.setItem('site-lang', lang);
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr';
+    document.documentElement.style.scrollBehavior = 'smooth';
     document.body.style.margin = '0';
     document.body.style.background = '#ffffff';
     document.body.style.color = '#0f0f10';
     document.body.style.fontFamily =
       'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
   }, [lang]);
+
+  const proxyLink =
+    'tg://proxy?server=YOUR_SERVER&port=443&secret=YOUR_SECRET';
 
   const t = {
     ru: {
@@ -167,8 +171,13 @@ export default function Home() {
     padding: '8px 14px',
     fontSize: 13,
     cursor: 'pointer',
-    transition: 'all .2s ease',
   });
+
+  const navLink: React.CSSProperties = {
+    color: '#555',
+    fontSize: 14,
+    textDecoration: 'none',
+  };
 
   const cardStyle: React.CSSProperties = {
     background: '#ffffff',
@@ -217,7 +226,16 @@ export default function Home() {
             flexWrap: 'wrap',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <a
+            href="#home"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 12,
+              textDecoration: 'none',
+              color: '#111',
+            }}
+          >
             <div
               style={{
                 width: 42,
@@ -234,22 +252,28 @@ export default function Home() {
               MT
             </div>
             <div style={{ fontWeight: 700, fontSize: 18 }}>{text.brand}</div>
-          </div>
+          </a>
 
           <nav
             style={{
               display: 'flex',
               alignItems: 'center',
               gap: 22,
-              color: '#555',
-              fontSize: 14,
               flexWrap: 'wrap',
             }}
           >
-            <span>{text.nav1}</span>
-            <span>{text.nav2}</span>
-            <span>{text.nav3}</span>
-            <span>{text.nav4}</span>
+            <a href="#home" style={navLink}>
+              {text.nav1}
+            </a>
+            <a href="#proxy" style={navLink}>
+              {text.nav2}
+            </a>
+            <a href="#steps" style={navLink}>
+              {text.nav3}
+            </a>
+            <a href="#faq" style={navLink}>
+              {text.nav4}
+            </a>
           </nav>
 
           <div
@@ -275,7 +299,7 @@ export default function Home() {
         </div>
       </header>
 
-      <section style={{ ...containerStyle, paddingTop: 72, paddingBottom: 48 }}>
+      <section id="home" style={{ ...containerStyle, paddingTop: 72, paddingBottom: 48 }}>
         <div
           style={{
             display: 'grid',
@@ -334,38 +358,16 @@ export default function Home() {
             </p>
 
             <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
-              <a href="#" style={primaryBtn}>
+              <a href={proxyLink} style={primaryBtn}>
                 {text.connect}
               </a>
               <a href="#steps" style={secondaryBtn}>
                 {text.how}
               </a>
             </div>
-
-            <div
-              style={{
-                display: 'flex',
-                gap: 28,
-                flexWrap: 'wrap',
-                marginTop: 34,
-              }}
-            >
-              <div>
-                <div style={{ fontSize: 28, fontWeight: 700 }}>1</div>
-                <div style={{ color: '#666', fontSize: 14 }}>Server</div>
-              </div>
-              <div>
-                <div style={{ fontSize: 28, fontWeight: 700 }}>24/7</div>
-                <div style={{ color: '#666', fontSize: 14 }}>Uptime</div>
-              </div>
-              <div>
-                <div style={{ fontSize: 28, fontWeight: 700 }}>RTL</div>
-                <div style={{ color: '#666', fontSize: 14 }}>FA support</div>
-              </div>
-            </div>
           </div>
 
-          <div style={{ ...cardStyle, padding: 26, alignSelf: 'start' }}>
+          <div id="proxy" style={{ ...cardStyle, padding: 26, alignSelf: 'start' }}>
             <div
               style={{
                 display: 'flex',
@@ -426,15 +428,18 @@ export default function Home() {
               </div>
             </div>
 
-            <button
+            <a
+              href={proxyLink}
               style={{
                 ...primaryBtn,
                 width: '100%',
                 marginTop: 24,
+                textAlign: 'center',
+                boxSizing: 'border-box',
               }}
             >
               {text.connect}
-            </button>
+            </a>
           </div>
         </div>
       </section>
@@ -488,7 +493,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section style={{ ...containerStyle, paddingTop: 18, paddingBottom: 70 }}>
+      <section id="faq" style={{ ...containerStyle, paddingTop: 18, paddingBottom: 70 }}>
         <div style={{ ...cardStyle, padding: 28 }}>
           <h2
             style={{
