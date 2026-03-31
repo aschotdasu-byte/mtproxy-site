@@ -1,7 +1,19 @@
+'use client';
+
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { Lang, translations } from '../i18n';
 
 export default function ProxyPage() {
+  const [lang, setLang] = useState<Lang>('ru');
   const proxyLink = 'tg://proxy?server=YOUR_SERVER&port=443&secret=YOUR_SECRET';
+
+  useEffect(() => {
+    const saved = localStorage.getItem('site-lang') as Lang | null;
+    if (saved === 'ru' || saved === 'en' || saved === 'fa') setLang(saved);
+  }, []);
+
+  const t = translations[lang];
 
   const pageStyle: React.CSSProperties = {
     minHeight: '100vh',
@@ -40,7 +52,7 @@ export default function ProxyPage() {
     <main style={pageStyle}>
       <div style={container}>
         <Link href="/" style={{ color: '#666', textDecoration: 'none', fontSize: 14 }}>
-          ← На главную
+          {t.common.backHome}
         </Link>
 
         <div style={{ marginTop: 24, marginBottom: 28 }}>
@@ -67,7 +79,7 @@ export default function ProxyPage() {
                 display: 'inline-block',
               }}
             />
-            Основной сервер
+            {t.common.serverBadge}
           </div>
 
           <h1
@@ -78,7 +90,7 @@ export default function ProxyPage() {
               letterSpacing: '-0.04em',
             }}
           >
-            Прокси
+            {t.proxy.title}
           </h1>
 
           <p
@@ -90,8 +102,7 @@ export default function ProxyPage() {
               margin: 0,
             }}
           >
-            Здесь находится основной сервер для подключения к Telegram через
-            MTProto proxy.
+            {t.proxy.subtitle}
           </p>
         </div>
 
@@ -112,7 +123,7 @@ export default function ProxyPage() {
           >
             <div>
               <div style={{ fontSize: 28, fontWeight: 700 }}>
-                Нидерланды · Amsterdam
+                {t.proxy.server}
               </div>
               <div style={{ color: '#777', marginTop: 6 }}>NL-1</div>
             </div>
@@ -140,7 +151,7 @@ export default function ProxyPage() {
                 borderBottom: '1px solid rgba(0,0,0,0.06)',
               }}
             >
-              <span style={{ color: '#666' }}>Пинг</span>
+              <span style={{ color: '#666' }}>{t.common.ping}</span>
               <strong>35 ms</strong>
             </div>
             <div
@@ -151,8 +162,8 @@ export default function ProxyPage() {
                 borderBottom: '1px solid rgba(0,0,0,0.06)',
               }}
             >
-              <span style={{ color: '#666' }}>Статус</span>
-              <strong>Онлайн</strong>
+              <span style={{ color: '#666' }}>{t.common.status}</span>
+              <strong>{t.common.online}</strong>
             </div>
             <div
               style={{
@@ -160,13 +171,13 @@ export default function ProxyPage() {
                 justifyContent: 'space-between',
               }}
             >
-              <span style={{ color: '#666' }}>Протокол</span>
+              <span style={{ color: '#666' }}>{t.common.protocol}</span>
               <strong>MTProto</strong>
             </div>
           </div>
 
           <a href={proxyLink} style={{ ...primaryBtn, marginTop: 24 }}>
-            Подключить
+            {t.common.connect}
           </a>
         </div>
       </div>
