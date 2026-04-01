@@ -6,7 +6,12 @@ import { Lang, translations } from '../i18n';
 
 export default function ProxyPage() {
   const [lang, setLang] = useState<Lang>('ru');
-  const proxyLink = 'tg://proxy?server=YOUR_SERVER&port=443&secret=YOUR_SECRET';
+
+  const proxyLink =
+    'tg://proxy?server=edge.jekahub.com&port=443&secret=eeaccaaf5fae0bc2da69b3dbd464c191';
+
+  const shareLink =
+    'https://t.me/proxy?server=edge.jekahub.com&port=443&secret=eeaccaaf5fae0bc2da69b3dbd464c191';
 
   useEffect(() => {
     const saved = localStorage.getItem('site-lang') as Lang | null;
@@ -179,6 +184,23 @@ export default function ProxyPage() {
           <a href={proxyLink} style={{ ...primaryBtn, marginTop: 24 }}>
             {t.common.connect}
           </a>
+
+          <div
+            style={{
+              marginTop: 16,
+              color: '#555',
+              lineHeight: 1.6,
+              fontSize: 14,
+            }}
+          >
+            {lang === 'ru' && 'Если отправляешь друзьям вне Telegram:'}
+            {lang === 'en' && 'If you send it to friends outside Telegram:'}
+            {lang === 'fa' && 'اگر لینک را خارج از تلگرام برای دوستان می‌فرستی:'}
+            <br />
+            <a href={shareLink} style={{ color: '#111', wordBreak: 'break-all' }}>
+              {shareLink}
+            </a>
+          </div>
         </div>
       </div>
     </main>
