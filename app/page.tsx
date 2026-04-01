@@ -61,9 +61,36 @@ export default function HomePage() {
     display: 'inline-block',
   };
 
+  const faqItems = {
+    ru: [
+      ['Это бесплатный прокси?', 'Да, сейчас на сайте доступен один рабочий сервер для быстрого подключения.'],
+      ['Работает ли на телефоне?', 'Да, сайт и подключение рассчитаны на смартфоны и планшеты.'],
+      ['Нужно ли устанавливать отдельное приложение?', 'Нет, достаточно открыть Telegram и подтвердить подключение прокси.'],
+      ['Можно ли добавить сайт на главный экран?', 'Да, для этого у нас есть отдельная страница с инструкцией для iPhone и Android.'],
+      ['Можно ли добавить ещё серверы?', 'Да, позже можно расширить список стран и вывести несколько карточек прокси.'],
+      ['Безопасно ли использовать такой прокси?', 'Лучше использовать только те серверы, которым ты доверяешь, и регулярно обновлять список.'],
+    ],
+    en: [
+      ['Is this proxy free?', 'Yes, one working server is currently available for quick connection.'],
+      ['Does it work on mobile?', 'Yes, the site and connection flow are designed for phones and tablets.'],
+      ['Do I need a separate app?', 'No, you only need Telegram and a confirmation to enable the proxy.'],
+      ['Can I add the site to the home screen?', 'Yes, there is a separate page with instructions for iPhone and Android.'],
+      ['Can more servers be added?', 'Yes, later the list can be expanded with more countries and proxy cards.'],
+      ['Is it safe to use this proxy?', 'It is better to use only servers you trust and keep the list updated.'],
+    ],
+    fa: [
+      ['آیا این پروکسی رایگان است؟', 'بله، در حال حاضر یک سرور فعال برای اتصال سریع در سایت موجود است.'],
+      ['آیا روی موبایل کار می‌کند؟', 'بله، سایت و فرایند اتصال برای موبایل و تبلت طراحی شده‌اند.'],
+      ['آیا به برنامه جداگانه نیاز دارم؟', 'خیر، فقط کافی است تلگرام را باز کنید و اتصال را تأیید کنید.'],
+      ['آیا می‌توان سایت را به صفحه اصلی اضافه کرد؟', 'بله، برای این کار یک صفحه جداگانه با راهنما برای iPhone و Android داریم.'],
+      ['آیا می‌توان سرورهای بیشتری اضافه کرد؟', 'بله، بعداً می‌توان کشورها و کارت‌های بیشتری اضافه کرد.'],
+      ['آیا استفاده از این پروکسی امن است؟', 'بهتر است فقط از سرورهایی استفاده کنید که به آن‌ها اعتماد دارید و لیست را به‌روز نگه دارید.'],
+    ],
+  } as const;
+
   return (
     <main style={pageStyle}>
-      <section style={{ ...container, paddingTop: 72, paddingBottom: 60 }}>
+      <section style={{ ...container, paddingTop: 72, paddingBottom: 50 }}>
         <div
           style={{
             display: 'grid',
@@ -147,7 +174,7 @@ export default function HomePage() {
                 <div style={{ color: '#666', fontSize: 14 }}>{t.home.uptime}</div>
               </div>
               <div>
-                <div style={{ fontSize: 28, fontWeight: 700 }}>5</div>
+                <div style={{ fontSize: 28, fontWeight: 700 }}>6</div>
                 <div style={{ color: '#666', fontSize: 14 }}>{t.home.pages}</div>
               </div>
             </div>
@@ -230,6 +257,56 @@ export default function HomePage() {
             >
               {t.home.openProxyPage}
             </Link>
+          </div>
+        </div>
+      </section>
+
+      <section style={{ ...container, paddingBottom: 80 }}>
+        <div style={{ maxWidth: 900 }}>
+          <h2
+            style={{
+              fontSize: 'clamp(32px, 5vw, 48px)',
+              lineHeight: 1.05,
+              margin: '0 0 22px',
+              letterSpacing: '-0.03em',
+            }}
+          >
+            {t.faq.title}
+          </h2>
+
+          <div style={{ ...cardStyle, padding: 28 }}>
+            <div style={{ display: 'grid', gap: 14 }}>
+              {faqItems[lang].map(([q, a], index) => (
+                <details
+                  key={index}
+                  style={{
+                    border: '1px solid rgba(0,0,0,0.08)',
+                    borderRadius: 18,
+                    padding: '18px 20px',
+                    background: '#fff',
+                  }}
+                >
+                  <summary
+                    style={{
+                      cursor: 'pointer',
+                      fontWeight: 700,
+                      fontSize: 18,
+                    }}
+                  >
+                    {q}
+                  </summary>
+                  <p
+                    style={{
+                      color: '#666',
+                      marginTop: 12,
+                      lineHeight: 1.7,
+                    }}
+                  >
+                    {a}
+                  </p>
+                </details>
+              ))}
+            </div>
           </div>
         </div>
       </section>
