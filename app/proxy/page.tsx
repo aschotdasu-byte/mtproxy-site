@@ -14,10 +14,22 @@ export default function ProxyPage() {
     'https://t.me/proxy?server=edge.jekahub.com&port=443&secret=eeaccaaf5fae0bc2da69b3dbd464c191';
 
   useEffect(() => {
-    const saved = localStorage.getItem('site-lang') as Lang | null;
-    if (saved === 'ru' || saved === 'en' || saved === 'fa') setLang(saved);
-  }, []);
+  const saved = localStorage.getItem('site-lang') as Lang | null;
+  if (saved === 'ru' || saved === 'en' || saved === 'fa') {
+    setLang(saved);
+  }
 
+  const handler = () => {
+    const newLang = localStorage.getItem('site-lang') as Lang | null;
+    if (newLang === 'ru' || newLang === 'en' || newLang === 'fa') {
+      setLang(newLang);
+    }
+  };
+
+  window.addEventListener('lang-change', handler);
+
+  return () => window.removeEventListener('lang-change', handler);
+}, []);
   const t = translations[lang];
 
   const pageStyle: React.CSSProperties = {
