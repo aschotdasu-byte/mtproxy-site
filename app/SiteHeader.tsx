@@ -8,11 +8,22 @@ export default function SiteHeader() {
   const [lang, setLang] = useState<Lang>('ru');
 
   useEffect(() => {
-    const saved = localStorage.getItem('site-lang') as Lang | null;
-    if (saved === 'ru' || saved === 'en' || saved === 'fa') {
-      setLang(saved);
-      return;
+  const saved = localStorage.getItem('site-lang') as Lang | null;
+  if (saved === 'ru' || saved === 'en' || saved === 'fa') {
+    setLang(saved);
+  }
+
+  const handler = () => {
+    const newLang = localStorage.getItem('site-lang') as Lang | null;
+    if (newLang === 'ru' || newLang === 'en' || newLang === 'fa') {
+      setLang(newLang);
     }
+  };
+
+  window.addEventListener('lang-change', handler);
+
+  return () => window.removeEventListener('lang-change', handler);
+}, []);
 
     const browserLang = navigator.language.toLowerCase();
     if (browserLang.startsWith('ru')) setLang('ru');
