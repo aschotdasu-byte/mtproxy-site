@@ -14,6 +14,12 @@ export default function HomePage() {
 
   const t = translations[lang];
 
+  const proxyLink =
+    'tg://proxy?server=edge.jekahub.com&port=443&secret=eeaccaaf5fae0bc2da69b3dbd464c191';
+
+  const shareLink =
+    'https://t.me/proxy?server=edge.jekahub.com&port=443&secret=eeaccaaf5fae0bc2da69b3dbd464c191';
+
   const pageStyle: React.CSSProperties = {
     minHeight: '100vh',
     margin: 0,
@@ -88,6 +94,27 @@ export default function HomePage() {
     ],
   } as const;
 
+  const seoText = {
+    ru: {
+      title: 'MTProto прокси для Telegram — бесплатно и быстро',
+      p1: 'MTProxy Site — это сервис бесплатного MTProto-прокси для Telegram. Наш прокси-сервер расположен в Европе и обеспечивает стабильное соединение с высокой скоростью. Подключение занимает несколько секунд — достаточно нажать одну кнопку.',
+      p2: 'MTProto — это протокол, разработанный командой Telegram для быстрой и защищённой передачи данных. В отличие от VPN, MTProto-прокси работает только с трафиком Telegram и не влияет на остальные приложения. Это удобный способ получить доступ к Telegram через рабочий прокси.',
+      p3: 'Если Telegram заблокирован провайдером или работает нестабильно, можно использовать наш MTProto proxy для Telegram для обхода ограничений и восстановления соединения. Сервис подходит для Android, iPhone, iPad, Windows, macOS и Linux. Добавьте сайт на главный экран, чтобы всегда иметь быстрый доступ к актуальной ссылке на прокси Telegram.',
+    },
+    en: {
+      title: 'MTProto proxy for Telegram — free and fast',
+      p1: 'MTProxy Site is a free MTProto proxy service for Telegram. Our proxy server is located in Europe and provides stable high-speed access. Connection takes just a few seconds — simply press one button.',
+      p2: 'MTProto is a protocol designed by the Telegram team for fast and secure data transfer. Unlike a VPN, an MTProto proxy only works with Telegram traffic and does not affect other apps. It is a convenient way to access Telegram through a working proxy.',
+      p3: 'If Telegram is blocked by your provider or works unstably, you can use our Telegram MTProto proxy to bypass restrictions and restore access. The service works on Android, iPhone, iPad, Windows, macOS, and Linux. Add the site to your home screen for quick access to the current Telegram proxy link.',
+    },
+    fa: {
+      title: 'پروکسی MTProto برای تلگرام — رایگان و سریع',
+      p1: 'MTProxy Site یک سرویس رایگان MTProto proxy برای Telegram است. سرور ما در اروپا قرار دارد و اتصال پایدار و پرسرعت فراهم می‌کند. اتصال فقط چند ثانیه زمان می‌برد.',
+      p2: 'MTProto پروتکلی است که توسط تیم Telegram برای انتقال سریع و امن داده طراحی شده است. برخلاف VPN، این پروکسی فقط روی ترافیک تلگرام اثر می‌گذارد و روی بقیه برنامه‌ها تأثیری ندارد.',
+      p3: 'اگر تلگرام توسط ارائه‌دهنده اینترنت شما مسدود شده یا ناپایدار است، می‌توانید از پروکسی MTProto تلگرام ما برای دور زدن محدودیت‌ها و بازیابی دسترسی استفاده کنید. این سرویس روی Android، iPhone، iPad، Windows، macOS و Linux کار می‌کند.',
+    },
+  } as const;
+
   return (
     <main style={pageStyle}>
       <section style={{ ...container, paddingTop: 72, paddingBottom: 50 }}>
@@ -149,12 +176,50 @@ export default function HomePage() {
             </p>
 
             <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
-              <Link href="/proxy" style={primaryBtn}>
-                {t.home.goProxy}
-              </Link>
+              <a href={proxyLink} style={primaryBtn}>
+                {t.common.connect}
+              </a>
               <Link href="/how" style={secondaryBtn}>
                 {t.home.howTo}
               </Link>
+            </div>
+
+            <div
+              style={{
+                marginTop: 18,
+                maxWidth: 760,
+                color: '#555',
+                lineHeight: 1.7,
+                fontSize: 15,
+              }}
+            >
+              {lang === 'ru' && (
+                <>
+                  Если отправляешь друзьям вне Telegram:
+                  <br />
+                  <a href={shareLink} style={{ color: '#111', wordBreak: 'break-all' }}>
+                    {shareLink}
+                  </a>
+                </>
+              )}
+              {lang === 'en' && (
+                <>
+                  If you send it to friends outside Telegram:
+                  <br />
+                  <a href={shareLink} style={{ color: '#111', wordBreak: 'break-all' }}>
+                    {shareLink}
+                  </a>
+                </>
+              )}
+              {lang === 'fa' && (
+                <>
+                  اگر لینک را خارج از تلگرام برای دوستان می‌فرستی:
+                  <br />
+                  <a href={shareLink} style={{ color: '#111', wordBreak: 'break-all' }}>
+                    {shareLink}
+                  </a>
+                </>
+              )}
             </div>
 
             <div
@@ -245,8 +310,8 @@ export default function HomePage() {
               </div>
             </div>
 
-            <Link
-              href="/proxy"
+            <a
+              href={proxyLink}
               style={{
                 ...primaryBtn,
                 width: '100%',
@@ -255,13 +320,30 @@ export default function HomePage() {
                 boxSizing: 'border-box',
               }}
             >
-              {t.home.openProxyPage}
-            </Link>
+              {t.common.connect}
+            </a>
+
+            <div
+              style={{
+                marginTop: 16,
+                color: '#555',
+                lineHeight: 1.6,
+                fontSize: 14,
+              }}
+            >
+              {lang === 'ru' && 'Если отправляешь друзьям вне Telegram:'}
+              {lang === 'en' && 'If you send it to friends outside Telegram:'}
+              {lang === 'fa' && 'اگر لینک را خارج از تلگرام برای دوستان می‌فرستی:'}
+              <br />
+              <a href={shareLink} style={{ color: '#111', wordBreak: 'break-all' }}>
+                {shareLink}
+              </a>
+            </div>
           </div>
         </div>
       </section>
 
-      <section style={{ ...container, paddingBottom: 80 }}>
+      <section style={{ ...container, paddingBottom: 60 }}>
         <div style={{ maxWidth: 900 }}>
           <h2
             style={{
@@ -308,6 +390,31 @@ export default function HomePage() {
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      <section style={{ ...container, paddingBottom: 90 }}>
+        <div style={{ ...cardStyle, padding: 32, maxWidth: 980 }}>
+          <h2
+            style={{
+              fontSize: 'clamp(28px, 4vw, 42px)',
+              lineHeight: 1.1,
+              margin: '0 0 18px',
+              letterSpacing: '-0.03em',
+            }}
+          >
+            {seoText[lang].title}
+          </h2>
+
+          <p style={{ color: '#555', lineHeight: 1.8, fontSize: 17 }}>
+            {seoText[lang].p1}
+          </p>
+          <p style={{ color: '#555', lineHeight: 1.8, fontSize: 17 }}>
+            {seoText[lang].p2}
+          </p>
+          <p style={{ color: '#555', lineHeight: 1.8, fontSize: 17, marginBottom: 0 }}>
+            {seoText[lang].p3}
+          </p>
         </div>
       </section>
     </main>
