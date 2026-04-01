@@ -8,24 +8,15 @@ export default function SiteHeader() {
   const [lang, setLang] = useState<Lang>('ru');
 
   useEffect(() => {
-  const saved = localStorage.getItem('site-lang') as Lang | null;
-  if (saved === 'ru' || saved === 'en' || saved === 'fa') {
-    setLang(saved);
-  }
+    const saved = localStorage.getItem('site-lang') as Lang | null;
 
-  const handler = () => {
-    const newLang = localStorage.getItem('site-lang') as Lang | null;
-    if (newLang === 'ru' || newLang === 'en' || newLang === 'fa') {
-      setLang(newLang);
+    if (saved === 'ru' || saved === 'en' || saved === 'fa') {
+      setLang(saved);
+      return;
     }
-  };
-
-  window.addEventListener('lang-change', handler);
-
-  return () => window.removeEventListener('lang-change', handler);
-}, []);
 
     const browserLang = navigator.language.toLowerCase();
+
     if (browserLang.startsWith('ru')) setLang('ru');
     else if (browserLang.startsWith('fa')) setLang('fa');
     else setLang('en');
@@ -36,6 +27,14 @@ export default function SiteHeader() {
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr';
   }, [lang]);
+
+  const changeLang = (newLang: Lang) => {
+    setLang(newLang);
+    localStorage.setItem('site-lang', newLang);
+    document.documentElement.lang = newLang;
+    document.documentElement.dir = newLang === 'fa' ? 'rtl' : 'ltr';
+    window.dispatchEvent(new Event('lang-change'));
+  };
 
   const t = translations[lang];
 
@@ -58,6 +57,7 @@ export default function SiteHeader() {
     color: '#555',
     textDecoration: 'none',
     fontSize: 14,
+    whiteSpace: 'nowrap',
   };
 
   const langBtn = (active: boolean): React.CSSProperties => ({
@@ -79,8 +79,10 @@ export default function SiteHeader() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          gap: 20,
+          gap: 16,
           flexWrap: 'wrap',
+          paddingTop: 10,
+          paddingBottom: 10,
         }}
       >
         <Link
@@ -104,6 +106,7 @@ export default function SiteHeader() {
               alignItems: 'center',
               justifyContent: 'center',
               fontWeight: 700,
+              flexShrink: 0,
             }}
           >
             MT
@@ -115,7 +118,7 @@ export default function SiteHeader() {
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: 22,
+            gap: 18,
             flexWrap: 'wrap',
           }}
         >
@@ -137,9 +140,15 @@ export default function SiteHeader() {
             border: '1px solid rgba(0,0,0,0.06)',
           }}
         >
-          <button onClick={() => setLang('ru')} style={langBtn(lang === 'ru')}>RU</button>
-          <button onClick={() => setLang('en')} style={langBtn(lang === 'en')}>EN</button>
-          <button onClick={() => setLang('fa')} style={langBtn(lang === 'fa')}>FA</button>
+          <button onClick={() => changeLang('ru')} style={langBtn(lang === 'ru')}>
+            RU
+          </button>
+          <button onClick={() => changeLang('en')} style={langBtn(lang === 'en')}>
+            EN
+          </button>
+          <button onClick={() => changeLang('fa')} style={langBtn(lang === 'fa')}>
+            FA
+          </button>
         </div>
       </div>
     </header>
