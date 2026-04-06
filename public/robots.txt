@@ -1,1 +1,4 @@
+User-agent: *
+Allow: /
 
+Sitemap: https://mtproxy-site.vercel.app/sitemap.xml
